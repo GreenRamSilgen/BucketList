@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 
-@MainActor
 @Model
 class Dream {
     var goal : String = ""
@@ -22,7 +21,10 @@ class Dream {
         self.completed = completed
         self.completionDate = completionDate
     }
-    
+}
+
+extension Dream {
+    @MainActor
     static var preview : ModelContainer {
         let container = try! ModelContainer(for: Dream.self, configurations: ModelConfiguration( isStoredInMemoryOnly: true))
         

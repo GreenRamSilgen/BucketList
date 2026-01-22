@@ -12,6 +12,8 @@ struct DreamListView: View {
     let filterType : FilterBL
     @Query var dreams : [Dream]
     
+    @Environment(\.modelContext) var modelContext
+    
     init(_ filter : FilterBL) {
         self.filterType = filter
         switch self.filterType {
@@ -34,6 +36,15 @@ struct DreamListView: View {
                         dream.completed.toggle()
                     }
                 Text(dream.goal)
+            }
+            .swipeActions {
+                Button(role: .destructive) {
+                    modelContext.delete(dream)
+                    try? modelContext.save()
+                } label: {
+                    Image(systemName: "trash")
+                }
+
             }
         }
         .listStyle(.plain)
